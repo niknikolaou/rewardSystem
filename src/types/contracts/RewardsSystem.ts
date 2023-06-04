@@ -30,6 +30,7 @@ import type {
 
 export interface RewardsSystemInterface extends utils.Interface {
   functions: {
+    "WalletRewards(address)": FunctionFragment;
     "addPermission(address,uint256)": FunctionFragment;
     "hasPermissionToWithdraw(address)": FunctionFragment;
     "owner()": FunctionFragment;
@@ -43,6 +44,7 @@ export interface RewardsSystemInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "WalletRewards"
       | "addPermission"
       | "hasPermissionToWithdraw"
       | "owner"
@@ -54,6 +56,10 @@ export interface RewardsSystemInterface extends utils.Interface {
       | "withdrawAdmin"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "WalletRewards",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "addPermission",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
@@ -85,6 +91,10 @@ export interface RewardsSystemInterface extends utils.Interface {
     values?: undefined
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "WalletRewards",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "addPermission",
     data: BytesLike
@@ -162,6 +172,11 @@ export interface RewardsSystem extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    WalletRewards(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     addPermission(
       wallet: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -202,6 +217,11 @@ export interface RewardsSystem extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
+
+  WalletRewards(
+    wallet: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   addPermission(
     wallet: PromiseOrValue<string>,
@@ -244,6 +264,11 @@ export interface RewardsSystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    WalletRewards(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     addPermission(
       wallet: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -291,6 +316,11 @@ export interface RewardsSystem extends BaseContract {
   };
 
   estimateGas: {
+    WalletRewards(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     addPermission(
       wallet: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -333,6 +363,11 @@ export interface RewardsSystem extends BaseContract {
   };
 
   populateTransaction: {
+    WalletRewards(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     addPermission(
       wallet: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,

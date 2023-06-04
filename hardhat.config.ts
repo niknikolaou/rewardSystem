@@ -16,6 +16,11 @@ if (!mnemonic) {
   throw new Error("Please set your MNEMONIC in a .env file");
 }
 
+const private_key: any | undefined = process.env.PRIVATE_KEY;
+if (!private_key) {
+  throw new Error("Please set your private in a .env file");
+}
+
 const infuraApiKey: string | undefined = process.env.INFURA_API_KEY;
 if (!infuraApiKey) {
   throw new Error("Please set your INFURA_API_KEY in a .env file");
@@ -49,11 +54,12 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
       jsonRpcUrl = "https://" + chain + ".infura.io/v3/" + infuraApiKey;
   }
   return {
-    accounts: {
+    /*accounts: {
       count: 10,
       mnemonic,
       path: "m/44'/60'/0'/0",
-    },
+    }*/
+    accounts:[private_key],
     chainId: chainIds[chain],
     url: jsonRpcUrl,
   };
